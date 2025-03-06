@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGPA Calculator - Death Note Theme</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            margin: 50px;
+            background: url('https://www.pixelstalk.net/wp-content/uploads/images6/Dark-Anime-Wallpaper-4K-High-Resolution.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            animation: fadeIn 2s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 5px white; }
+            50% { text-shadow: 0 0 20px white; }
+            100% { text-shadow: 0 0 5px white; }
+        }
+
+        h2 {
+            font-weight: 700;
+            text-shadow: 2px 2px 10px white;
+            animation: glow 2s infinite alternate;
+        }
+
+        table {
+            margin: auto;
+            border-collapse: collapse;
+            width: 50%;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+        th, td {
+            border: 1px solid white;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid white;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.3s ease-in-out, background 0.3s;
+        }
+        button:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+        
+        footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: white;
+            text-shadow: 1px 1px 5px white;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <h2>SGPA Calculator</h2>
+    <table id="courses">
+        <tr>
+            <th>Course Credits</th>
+            <th>Grade</th>
+        </tr>
+        <tr>
+            <td><input type="number" class="credits" min="0"></td>
+            <td>
+                <select class="grades">
+                    <option value="10">O</option>
+                    <option value="9">A+</option>
+                    <option value="8">A</option>
+                    <option value="7">B+</option>
+                    <option value="6">B</option>
+                    <option value="5">C</option>
+                    <option value="4">P</option>
+                    <option value="0">F</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <button onclick="addRow()">Add Course</button>
+    <button onclick="calculateSGPA()">Calculate SGPA</button>
+    <h3> <span id="result"></span></h3>
+    <footer>Designed by Dhananjaya L </footer>
+
+    <script>
+        function addRow() {
+            let table = document.getElementById("courses");
+            let row = table.insertRow(-1);
+            let cell1 = row.insertCell(0);
+            let cell2 = row.insertCell(1);
+            cell1.innerHTML = '<input type="number" class="credits" min="0">';
+            cell2.innerHTML = `<select class="grades">
+                <option value="10">O</option>
+                <option value="9">A+</option>
+                <option value="8">A</option>
+                <option value="7">B+</option>
+                <option value="6">B</option>
+                <option value="5">C</option>
+                <option value="4">P</option>
+                <option value="0">F</option>
+            </select>`;
+        }
+
+        function calculateSGPA() {
+            let credits = document.querySelectorAll(".credits");
+            let grades = document.querySelectorAll(".grades");
+            let totalCredits = 0, totalPoints = 0;
+
+            for (let i = 0; i < credits.length; i++) {
+                let credit = parseFloat(credits[i].value) || 0;
+                let grade = parseFloat(grades[i].value) || 0;
+                totalCredits += credit;
+                totalPoints += credit * grade;
+            }
+
+            let sgpa = totalCredits ? (totalPoints / totalCredits).toFixed(2) : 0;
+            document.getElementById("result").innerText = sgpa;
+        }
+    </script>
+</body>
+</html>
